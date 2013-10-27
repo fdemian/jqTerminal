@@ -1,4 +1,4 @@
 jqTerminal
 ==========
 
-A Unix-like terminal, written in Javascript with support for some of the most common unix programs.
+A Unix-like terminal, written in Javascript.It has support for some of the most common unix commands.
