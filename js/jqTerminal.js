@@ -7,7 +7,7 @@ var Terminal = function (user, prompt,container) {
 		var _eraseLimit;
 		
 		// Semi-public variables? Should not be accessed directly.
-		var filesInDirectory = [{name:"hello.txt",mimeType:"text/plain",content:"Hola, mundo!."}];
+		var filesInDirectory = [{name:"hello.txt",mimeType:"text/plain",content:"Hola, mundo!.",permissions:"rw-r--r--"}];
 		var consoleCommands = [
 		{name:"man",description:"man - display the on-line manual pages (aka ''man pages'')",run:man},
 		{name:"clear",description:"clear - clear the terminal screen",run:_clearConsole},
@@ -58,6 +58,15 @@ var Terminal = function (user, prompt,container) {
 				_write("bash: " + command + ": command not found");
 			}
 		}
+		
+		function handleClick(event)
+		{
+			if($(".console")[0].selectionStart  <= _eraseLimit || $(".console")[0].selectionEnd <= _eraseLimit)
+			{
+				$(".console")[0].selectionStart = _eraseLimit;
+				$(".console")[0].selectionEnd = _eraseLimit;
+			}
+		}
 
 		function handleKeydown(event)
 		{
@@ -79,6 +88,9 @@ var Terminal = function (user, prompt,container) {
 					 //38 up arrow, 40 - down arrow
 					event.preventDefault();
 					break;
+				default:
+					//preventPromptErasing();
+					break;
 			}
 		}
 		
@@ -91,7 +103,7 @@ var Terminal = function (user, prompt,container) {
 		   if(commandQuery != "")
 		   {
 			  var splitCommand = commandQuery.split(" ");
-			  executeCommand(splitCommand[0],splitCommand[1]);
+			  executeCommand(splitCommand[0],splitCommand);
 		   }
 		  
 		  if(splitCommand[0].indexOf("clear") == -1)
@@ -114,8 +126,9 @@ var Terminal = function (user, prompt,container) {
 		// --- Predefined commands. --- \\
 
 		// Show the manual pages for a given command.
-		function man(command)
+		function man(arguments)
 		{
+			var command = arguments[1];
 			_write("\n");
 			if(command!= undefined && command.trim() != "")
 			{
@@ -132,38 +145,42 @@ var Terminal = function (user, prompt,container) {
 			}
 			else
 			{
-				// Todo, is this really the english text?
-				_write("Which manual page do you wish to see?");
+				_write("What manual page do you want?");
 			}
 		}
 
 	// Bring the system down....that means close the window!
-	// TODO implement wait or erase code.
+	// Arguments, an array of space-separated values representing arguments.
 	function shutdown(arguments)
 	{
 		// Implementing a wait operation.
-		/*
-		if(strpos(arguments,"-t"))
+		if((arguments.length > 1) && (arguments[1].trim()!= "") && (arguments[1].indexOf("-t") != -1))
 		{
-			var time = arguments.split(" ")[1].trim(); 
-			if(time === parseInt(time))
+			var time = arguments[2].trim(); 
+			if(!isNaN(time))
 			{
 				//wait "time" seconds before shuting down the system.
-				
+				_write("Bringing down the system in" + time + "Seconds");
+				_write("\n");
+				setTimeout(shutdown([]), (+time *1000));
 			}
-		}*/
-		
+		}
 		window.close();
 	}
 	
 	function ls(arguments)
 	{
+	   console.log(arguments.indexOf("-l"));
 	   var separator = (arguments === undefined || arguments.indexOf("-l") == -1)? "\t" : "\n";
 	   
 	   _write("\n");
 	   
 	   for(dirIndex =0; dirIndex < filesInDirectory.length; dirIndex++)
 	   {
+			if( arguments.indexOf("-l") !== -1)
+			{
+				_write(filesInDirectory[dirIndex].permissions + " ");
+			}
 			_write(filesInDirectory[dirIndex].name);
 			_write(separator);
 	   }
@@ -171,7 +188,7 @@ var Terminal = function (user, prompt,container) {
 	
 	function cat(arguments)
 	{
-		var filePos = $.inArray(arguments, $.map(filesInDirectory,function(item,index){ return item.name;}));
+		var filePos = $.inArray(arguments[1], $.map(filesInDirectory,function(item,index){ return item.name;}));
 	    if(filePos != -1)
 		{
 		  _write("\n");
@@ -185,18 +202,17 @@ var Terminal = function (user, prompt,container) {
 		_promptSymbol = prompt;
 		_hostAndPrompt = user + prompt;
 		_containerId = container;
-		console.log("container: " + container);
 		var con = $("<textarea class=\"console\" spellcheck=\"false\">");
 		con.val(_hostAndPrompt);
-		con.keydown(function( event ) { handleKeydown(event);});
 		_eraseLimit = _hostAndPrompt.length;
-	
+		con.keydown(function( event ) { handleKeydown(event);});
+		
 		// Initialize the conosle and place it inside its container.
 		var term = $("<textarea class=\"console\" spellcheck=\"false\">");
 		term.val(_hostAndPrompt);
-		term.keydown(function( event ) { handleKeydown(event);});	
-		console.log(_containerId);
+		term.keydown(function( event ) { handleKeydown(event);});
 		$("#" + _containerId).append(term);
+		$("#" + _containerId).click(function (event) {handleClick(event);});
 	}
 	
 	return {
