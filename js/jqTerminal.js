@@ -2,12 +2,13 @@ var Terminal = function (user, prompt,container) {
 		
 		// Private variables.
 		var _hostAndPrompt = '';
+		var _user = "user";
 		var _containerId = '';
 		var _promptSymbol = '';
 		var _eraseLimit;
 		
 		// Semi-public variables? Should not be accessed directly.
-		var filesInDirectory = [{name:"hello.txt",mimeType:"text/plain",content:"Hola, mundo!.",permissions:"rw-r--r--"}];
+		var filesInDirectory = [{name:"hello.txt",mimeType:"text/plain",content:"Hola, mundo!.",permissions:"rw-r--r--",type:1,owner:_user,size:1,date:"18 Oct 16:45"}];
 		var consoleCommands = [
 		{name:"man",description:"man - display the on-line manual pages (aka ''man pages'')",run:man},
 		{name:"clear",description:"clear - clear the terminal screen",run:_clearConsole},
@@ -142,7 +143,7 @@ var Terminal = function (user, prompt,container) {
 		{
 			var command = arguments[1];
 			_write("\n");
-			if(command!= undefined && command.trim() != "")
+			if(command!= undefined && c_userommand.trim() != "")
 			{
 				// Does the command we're trying to search information about exist?	
 				var commandIndex = $.inArray(command, $.map(consoleCommands,function(item,index){ return item.name;}));
@@ -150,7 +151,7 @@ var Terminal = function (user, prompt,container) {
 				{
 					_write(consoleCommands[commandIndex].description);
 				}
-				else
+				else_user
 				{
 					_write("No manual entry for " + command);
 				}
@@ -182,7 +183,6 @@ var Terminal = function (user, prompt,container) {
 	
 	function ls(arguments)
 	{
-	   console.log(arguments.indexOf("-l"));
 	   var separator = (arguments === undefined || arguments.indexOf("-l") == -1)? "\t" : "\n";
 	   
 	   _write("\n");
@@ -191,7 +191,7 @@ var Terminal = function (user, prompt,container) {
 	   {
 			if( arguments.indexOf("-l") !== -1)
 			{
-				_write(filesInDirectory[dirIndex].permissions + " ");
+				_write(filesInDirectory[dirIndex].permissions + " " + filesInDirectory[dirIndex].type + " " + filesInDirectory[dirIndex].owner + " " + filesInDirectory[dirIndex].owner + " " + filesInDirectory[dirIndex].date + " ");
 			}
 			_write(filesInDirectory[dirIndex].name);
 			_write(separator);
@@ -212,7 +212,7 @@ var Terminal = function (user, prompt,container) {
 	{
 		// Initialize variables
 		_promptSymbol = prompt;
-		_hostAndPrompt = user + prompt;
+		_hostAndPrompt = user + prompt;		
 		_containerId = container;
 		var con = $("<textarea class=\"console\" spellcheck=\"false\">");
 		con.val(_hostAndPrompt);
