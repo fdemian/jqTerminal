@@ -77,13 +77,16 @@ var Terminal = function (user, prompt,container) {
 				case 13:
 					 handleEnterKey();
 					break;
-				case 8:	
-				case 37:
+				case 36:
+					handleInitKey();
 				case 46:
+					preventPromptErasing(true);
+				case 8:	
+				case 37:								
 					// 8 - backspace,.
-					preventPromptErasing();
+					preventPromptErasing(false);
 					break;
-				case 38:
+				case 38:				
 				case 40:
 					 //38 up arrow, 40 - down arrow
 					event.preventDefault();
@@ -92,6 +95,13 @@ var Terminal = function (user, prompt,container) {
 					//preventPromptErasing();
 					break;
 			}
+		}
+		
+		function handleInitKey()		
+		{
+		  event.preventDefault();
+		  $(".console")[0].selectionStart = _eraseLimit;
+		  $(".console")[0].selectionEnd = _eraseLimit;		  
 		}
 		
 		//Enter key has been pressed.	   
@@ -113,9 +123,11 @@ var Terminal = function (user, prompt,container) {
 		}
 
 		// Prevents the user from deleting the command prompt.
-		function preventPromptErasing()
-		{
-			if($(".console")[0].selectionStart  <= _eraseLimit || $(".console")[0].selectionEnd <= _eraseLimit)
+		function preventPromptErasing(deleteKeyPressed)
+		{				  
+		      
+		  
+			if($(".console")[0].selectionStart  < _eraseLimit || $(".console")[0].selectionEnd < _eraseLimit || (!deleteKeyPressed && $(".console")[0].selectionStart  == _eraseLimit || $(".console")[0].selectionEnd == _eraseLimit))
 			{
 				event.preventDefault();
 				$(".console")[0].selectionStart = _eraseLimit;
