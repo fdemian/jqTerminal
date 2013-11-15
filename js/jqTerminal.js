@@ -75,7 +75,7 @@ var Terminal = function (user, prompt,container) {
 			switch(event.which)
 			{							
 				case 13:
-					 handleEnterKey();
+					 handleEnterKey(event);
 					break;
 				case 36:
 					handleInitKey();
@@ -105,10 +105,9 @@ var Terminal = function (user, prompt,container) {
 		}
 		
 		//Enter key has been pressed.	   
-		function handleEnterKey()
+		function handleEnterKey(event)
 		{
-		   event.preventDefault(); // Do not insert a newline. Instead, let us handle the event.
-			  
+		   event.preventDefault(); // Do not insert a newline. Instead, let us handle the event.		  
 		   var commandQuery = getCommandInput().trim();
 		   if(commandQuery != "")
 		   {
@@ -120,6 +119,8 @@ var Terminal = function (user, prompt,container) {
 		  {
 			 _insertNewLine();
 		  }
+		  
+		  return false;
 		}
 
 		// Prevents the user from deleting the command prompt.
@@ -166,18 +167,23 @@ var Terminal = function (user, prompt,container) {
 	function shutdown(arguments)
 	{
 		// Implementing a wait operation.
-		if((arguments.length > 1) && (arguments[1].trim()!= "") && (arguments[1].indexOf("-t") != -1))
+		if((arguments !== undefined) && (arguments.length > 1) && (arguments[1].trim()!= "") && (arguments[1].indexOf("-t") != -1))
 		{
 			var time = arguments[2].trim(); 
 			if(!isNaN(time))
 			{
 				//wait "time" seconds before shuting down the system.
-				_write("Bringing down the system in" + time + "Seconds");
 				_write("\n");
-				setTimeout(shutdown([]), (+time *1000));
+				_write("Bringing down the system in " + time + " seconds");
+				_write("\n");
+				setTimeout(shutdown, (parseInt(time)*1000));
+				return parseInt(time);
 			}
 		}
+	
 		window.close();
+		
+		return 0;
 	}
 	
 	function ls(arguments)
