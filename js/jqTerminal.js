@@ -156,6 +156,84 @@ var Terminal = function (user, prompt,container) {
 		$("#" + _containerId).click(function (event) {handleClick(event);});
 	}
 	
+			// --- Predefined commands. --- \\
+
+		// Show the manual pages for a given command.
+		function man(arguments)
+		{
+			var command = arguments[1];
+			_write("\n");
+			if( command !== undefined && command.trim() != "")
+			{
+				// Does the command we're trying to search information about exist?	
+				var commandIndex = $.inArray(command, $.map(consoleCommands,function(item,index){ return item.name;}));
+				if(commandIndex != -1)
+				{
+					_write(consoleCommands[commandIndex].description);
+				}
+				else
+				{
+					_write("No manual entry for " + command);
+				}
+			}
+			else
+			{
+				_write("What manual page do you want?");
+			}
+		}
+
+	// Bring the system down....that means close the window!
+	// Arguments, an array of space-separated values representing arguments.
+	function shutdown(arguments)
+	{
+		// Implementing a wait operation.
+		if((arguments !== undefined) && (arguments.length > 1) && (arguments[1].trim()!= "") && (arguments[1].indexOf("-t") != -1))
+		{
+			var time = arguments[2].trim(); 
+			if(!isNaN(time))
+			{
+				//wait "time" seconds before shuting down the system.
+				_write("\n");
+				_write("Bringing down the system in " + time + " seconds");
+				_write("\n");
+				setTimeout(shutdown, (parseInt(time)*1000));
+				return parseInt(time);
+			}
+		}
+		
+		window.close(); 
+		
+		return 0;
+	}
+	
+	function ls(arguments)
+	{
+	   var separator = (arguments === undefined || arguments.indexOf("-l") == -1)? "\t" : "\n";
+	   
+	   _write("\n");
+	   
+	   for(dirIndex =0; dirIndex < filesInDirectory.length; dirIndex++)
+	   {
+			if( arguments.indexOf("-l") !== -1)
+			{
+				_write(filesInDirectory[dirIndex].permissions + " " + filesInDirectory[dirIndex].type + " " + filesInDirectory[dirIndex].owner + " " + filesInDirectory[dirIndex].owner + " " + filesInDirectory[dirIndex].date + " ");
+			}
+			_write(filesInDirectory[dirIndex].name);
+			_write(separator);
+	   }
+	}
+	
+	function cat(arguments)
+	{
+		var filePos = $.inArray(arguments[1], $.map(filesInDirectory,function(item,index){ return item.name;}));
+	    if(filePos != -1)
+		{
+		  _write("\n");
+		  _write(filesInDirectory[filePos].content);
+		}
+	}
+	
+	
 	return {
 		initialize: doInitialize,
 		clear: _clearConsole,
