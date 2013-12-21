@@ -15,7 +15,8 @@ var Terminal = function (user, prompt,container) {
 		{name:"shutdown",description:"shutdown - bring the system down",run:shutdown},
 		{name:"reboot",description:"reboot - reboot the system",run:shutdown},
 		{name:"ls",description:"ls - list directory contents",run:ls},
-		{name:"cat",description:"cat - concatenate files and print on the standard output",run:cat}
+		{name:"cat",description:"cat - concatenate files and print on the standard output",run:cat},
+		{name:"echo",description:"echo - echo the contents of a file",run:echo}
 		];
 		
 		
@@ -201,7 +202,7 @@ var Terminal = function (user, prompt,container) {
 			}
 		}
 		
-		window.close(); 
+		$("#" + _containerId).remove();
 		
 		return 0;
 	}
@@ -231,6 +232,18 @@ var Terminal = function (user, prompt,container) {
 		  _write("\n");
 		  _write(filesInDirectory[filePos].content);
 		}
+	}
+	
+	function echo(arguments)
+	{
+	  
+	   _write("\n");
+	  
+	  for(var i = 1; i < arguments.length; i++)
+	  {
+		  _write(arguments[i]);
+		  _write(" ");
+	  }		
 	}
 	
 	
