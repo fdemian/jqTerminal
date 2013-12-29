@@ -177,7 +177,6 @@ var Terminal = function (user, prompt,container) {
 	
 	function doDestroy()
 	{
-		console.log(_containerId);
 		$("#" + _containerId).remove();
 	}
 

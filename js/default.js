@@ -52,7 +52,7 @@
 				self.write("\n");
 				self.write("Bringing down the system in " + time + " seconds");
 				self.write("\n");
-				setTimeout(shutdown, (parseInt(time)*1000));
+				setTimeout(function(){shutdown([], self);}, (parseInt(time)*1000));
 				return parseInt(time);
 			}
 		}
