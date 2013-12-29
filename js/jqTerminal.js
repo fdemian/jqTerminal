@@ -175,6 +175,12 @@ var Terminal = function (user, prompt,container) {
 		}
 	}
 	
+	function doDestroy()
+	{
+		console.log(_containerId);
+		$("#" + _containerId).remove();
+	}
+
 	
 	/*
 			// --- Predefined commands. --- \\
@@ -267,12 +273,14 @@ var Terminal = function (user, prompt,container) {
 	}*/
 	
 	
+	
 	return {
 		initialize: doInitialize,
 		clear: _clearConsole,
 		write: _write,
 		files: _filesInDirectory,
 		commands: consoleCommands,
-		addCommand:addCommand
+		addCommand:addCommand,
+		destroy: doDestroy
 	};
 };

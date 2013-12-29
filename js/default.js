@@ -57,7 +57,7 @@
 			}
 		}
 		
-		$("#" + _containerId).remove();
+		self.destroy();
 		
 		return 0;
 	}
