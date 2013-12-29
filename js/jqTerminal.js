@@ -6,10 +6,12 @@ var Terminal = function (user, prompt,container) {
 		var _containerId = '';
 		var _promptSymbol = '';
 		var _eraseLimit;
+		var _self;
 		
 		// Semi-public variables? Should not be accessed directly.
-		var filesInDirectory = [{name:"hello.txt",mimeType:"text/plain",content:"Hola, mundo!.",permissions:"rw-r--r--",type:1,owner:_user,size:1,date:"18 Oct 16:45"}];
-		var consoleCommands = [
+		var _filesInDirectory = [{name:"hello.txt",mimeType:"text/plain",content:"Hola, mundo!.",permissions:"rw-r--r--",type:1,owner:_user,size:1,date:"18 Oct 16:45"}];
+		
+		/*var consoleCommands = [
 		{name:"man",description:"man - display the on-line manual pages (aka ''man pages'')",run:man},
 		{name:"clear",description:"clear - clear the terminal screen",run:_clearConsole},
 		{name:"shutdown",description:"shutdown - bring the system down",run:shutdown},
@@ -17,8 +19,9 @@ var Terminal = function (user, prompt,container) {
 		{name:"ls",description:"ls - list directory contents",run:ls},
 		{name:"cat",description:"cat - concatenate files and print on the standard output",run:cat},
 		{name:"echo",description:"echo - echo the contents of a file",run:echo}
-		];
+		];*/
 		
+		var consoleCommands = [];
 		
 		function getCommandInput()
 		{
@@ -52,7 +55,7 @@ var Terminal = function (user, prompt,container) {
 			if( commandPos != -1)
 			{
 				console.log("Running " + command);
-				consoleCommands[commandPos].run(arguments);
+				consoleCommands[commandPos].run(arguments,_self);
 			}
 			else
 			{
@@ -144,6 +147,7 @@ var Terminal = function (user, prompt,container) {
 		_promptSymbol = prompt;
 		_hostAndPrompt = user + prompt;		
 		_containerId = container;
+		_self = this;
 		var con = $("<textarea class=\"console\" spellcheck=\"false\">");
 		con.val(_hostAndPrompt);
 		_eraseLimit = _hostAndPrompt.length;
@@ -157,6 +161,22 @@ var Terminal = function (user, prompt,container) {
 		$("#" + _containerId).click(function (event) {handleClick(event);});
 	}
 	
+	
+	/* A command should have, at least the following sections:
+       - name (the name of the command). 
+	   - man  (a description of what it does).
+       - run  (the code that executes when the console runs the command).
+	*/
+	function addCommand(command)
+	{
+		if(command.name !== undefined && command.man !== undefined && command.run !== undefined)
+		{
+			consoleCommands.push(command);
+		}
+	}
+	
+	
+	/*
 			// --- Predefined commands. --- \\
 
 		// Show the manual pages for a given command.
@@ -244,11 +264,15 @@ var Terminal = function (user, prompt,container) {
 		  _write(arguments[i]);
 		  _write(" ");
 	  }		
-	}
+	}*/
 	
 	
 	return {
 		initialize: doInitialize,
 		clear: _clearConsole,
+		write: _write,
+		files: _filesInDirectory,
+		commands: consoleCommands,
+		addCommand:addCommand
 	};
 };

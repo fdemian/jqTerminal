@@ -9,10 +9,16 @@ div { width:50%;height:50%;position:absolute;margin-top:12%;margin-left:20%; }
 <link rel="stylesheet" type="text/css" href="css/jqTerminal.css">
 <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="js/jqTerminal.js"></script>
+<script type="text/javascript" src="js/default.js"></script>
 <script type="text/javascript">
 $(function(){
 	var terminal = new Terminal("root@domain", "$","console-container");
 	terminal.initialize();
+	for(i =0; i < defaultCommands.length; i++)
+	{
+		console.log(defaultCommands[i].man);
+		terminal.addCommand(defaultCommands[i]);
+	}
 });
 </script>
 </head>
