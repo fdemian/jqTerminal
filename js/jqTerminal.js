@@ -21,7 +21,7 @@ var Terminal = function (user, prompt,container) {
 		{name:"echo",description:"echo - echo the contents of a file",run:echo}
 		];*/
 		
-		var consoleCommands = [];
+		var _consoleCommands = [];
 		
 		function getCommandInput()
 		{
@@ -55,7 +55,7 @@ var Terminal = function (user, prompt,container) {
 			if( commandPos != -1)
 			{
 				console.log("Running " + command);
-				consoleCommands[commandPos].run(arguments,_self);
+				_consoleCommands[commandPos].run(arguments,_self);
 			}
 			else
 			{
@@ -171,7 +171,7 @@ var Terminal = function (user, prompt,container) {
 	{
 		if(command.name !== undefined && command.man !== undefined && command.run !== undefined)
 		{
-			consoleCommands.push(command);
+			_consoleCommands.push(command);
 		}
 	}
 	
@@ -278,7 +278,7 @@ var Terminal = function (user, prompt,container) {
 		clear: _clearConsole,
 		write: _write,
 		files: _filesInDirectory,
-		commands: consoleCommands,
+		commands: _consoleCommands,
 		addCommand:addCommand,
 		destroy: doDestroy
 	};
