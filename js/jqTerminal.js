@@ -51,7 +51,7 @@ var Terminal = function (user, prompt,container) {
 
 		function executeCommand(command,arguments)
 		{
-			var commandPos = $.inArray(command, $.map(consoleCommands,function(item,index){ return item.name;}));
+			var commandPos = $.inArray(command, $.map(_consoleCommands,function(item,index){ return item.name;}));
 			if( commandPos != -1)
 			{
 				console.log("Running " + command);
