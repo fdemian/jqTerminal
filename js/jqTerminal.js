@@ -7,29 +7,18 @@ var Terminal = function (user, prompt,container) {
 		var _promptSymbol = '';
 		var _eraseLimit;
 		var _self;
-		
-		// Semi-public variables? Should not be accessed directly.
-		var _filesInDirectory = [{name:"hello.txt",mimeType:"text/plain",content:"Hola, mundo!.",permissions:"rw-r--r--",type:1,owner:_user,size:1,date:"18 Oct 16:45"}];
-		
-		/*var consoleCommands = [
-		{name:"man",description:"man - display the on-line manual pages (aka ''man pages'')",run:man},
-		{name:"clear",description:"clear - clear the terminal screen",run:_clearConsole},
-		{name:"shutdown",description:"shutdown - bring the system down",run:shutdown},
-		{name:"reboot",description:"reboot - reboot the system",run:shutdown},
-		{name:"ls",description:"ls - list directory contents",run:ls},
-		{name:"cat",description:"cat - concatenate files and print on the standard output",run:cat},
-		{name:"echo",description:"echo - echo the contents of a file",run:echo}
-		];*/
-		
+		var _filesInDirectory = [{name:"hello.txt",mimeType:"text/plain",content:"Hola, mundo!.",permissions:"rw-r--r--",type:1,owner:_user,size:1,date:"18 Oct 16:45"}];		
 		var _consoleCommands = [];
 		
+		// Gets the commands that was typed into the console.
 		function getCommandInput()
 		{
 			var lastLine = $(".console").val().split('\n')[$(".console").val().split('\n').length-1];
 			command = lastLine.split(_promptSymbol)[1];
 			return command;
 		}
-
+		
+		// Inserts a new line in the console. 
 		function _insertNewLine()
 		{
 			 $(".console").val($(".console").val() + '\n' + _hostAndPrompt);
@@ -43,12 +32,14 @@ var Terminal = function (user, prompt,container) {
 			$(".console").val("" + _hostAndPrompt);
 			_eraseLimit = _hostAndPrompt.length;
 		}
-
+		
+		// Writes the given text on the console.
 		function _write(text)
 		{
 		  $(".console").val($(".console").val() + text);
 		}
-
+		
+		// Executes a given command. 
 		function executeCommand(command,arguments)
 		{
 			var commandPos = $.inArray(command, $.map(_consoleCommands,function(item,index){ return item.name;}));
@@ -64,6 +55,7 @@ var Terminal = function (user, prompt,container) {
 			}
 		}
 		
+		// Handles the click event. 
 		function handleClick(event)
 		{
 			if($(".console")[0].selectionStart  <= _eraseLimit || $(".console")[0].selectionEnd <= _eraseLimit)
@@ -72,7 +64,8 @@ var Terminal = function (user, prompt,container) {
 				$(".console")[0].selectionEnd = _eraseLimit;
 			}
 		}
-
+		
+		// Handles the keypress events to prevent the user to erase the command prompt.
 		function handleKeydown(event)
 		{
 			console.log(event.which); 
@@ -102,6 +95,7 @@ var Terminal = function (user, prompt,container) {
 			}
 		}
 		
+		// Handles the init key.								
 		function handleInitKey()		
 		{
 		  event.preventDefault();
@@ -109,7 +103,7 @@ var Terminal = function (user, prompt,container) {
 		  $(".console")[0].selectionEnd = _eraseLimit;		  
 		}
 		
-		//Enter key has been pressed.	   
+		// Handles the enter key.    
 		function handleEnterKey(event)
 		{
 		   event.preventDefault(); // Do not insert a newline. Instead, let us handle the event.		  
@@ -141,6 +135,7 @@ var Terminal = function (user, prompt,container) {
 			}
 		}
 	
+	// Initialize the console and all of its relevant variables.
 	function doInitialize()
 	{
 		// Initialize variables
@@ -162,10 +157,13 @@ var Terminal = function (user, prompt,container) {
 	}
 	
 	
-	/* A command should have, at least the following sections:
-       - name (the name of the command). 
-	   - man  (a description of what it does).
-       - run  (the code that executes when the console runs the command).
+	/* 
+		Adds a command: 
+		
+		A command should have, at least the following sections:
+		- name (the name of the command). 
+		- man  (a description of what it does).
+		- run  (the code that executes when the console runs the command).
 	*/
 	function addCommand(command)
 	{
@@ -175,104 +173,12 @@ var Terminal = function (user, prompt,container) {
 		}
 	}
 	
+	// Removes the console from its container.
 	function doDestroy()
 	{
 		$("#" + _containerId).remove();
 	}
 
-	
-	/*
-			// --- Predefined commands. --- \\
-
-		// Show the manual pages for a given command.
-		function man(arguments)
-		{
-			var command = arguments[1];
-			_write("\n");
-			if( command !== undefined && command.trim() != "")
-			{
-				// Does the command we're trying to search information about exist?	
-				var commandIndex = $.inArray(command, $.map(consoleCommands,function(item,index){ return item.name;}));
-				if(commandIndex != -1)
-				{
-					_write(consoleCommands[commandIndex].description);
-				}
-				else
-				{
-					_write("No manual entry for " + command);
-				}
-			}
-			else
-			{
-				_write("What manual page do you want?");
-			}
-		}
-
-	// Bring the system down....that means close the window!
-	// Arguments, an array of space-separated values representing arguments.
-	function shutdown(arguments)
-	{
-		// Implementing a wait operation.
-		if((arguments !== undefined) && (arguments.length > 1) && (arguments[1].trim()!= "") && (arguments[1].indexOf("-t") != -1))
-		{
-			var time = arguments[2].trim(); 
-			if(!isNaN(time))
-			{
-				//wait "time" seconds before shuting down the system.
-				_write("\n");
-				_write("Bringing down the system in " + time + " seconds");
-				_write("\n");
-				setTimeout(shutdown, (parseInt(time)*1000));
-				return parseInt(time);
-			}
-		}
-		
-		$("#" + _containerId).remove();
-		
-		return 0;
-	}
-	
-	function ls(arguments)
-	{
-	   var separator = (arguments === undefined || arguments.indexOf("-l") == -1)? "\t" : "\n";
-	   
-	   _write("\n");
-	   
-	   for(dirIndex =0; dirIndex < filesInDirectory.length; dirIndex++)
-	   {
-			if( arguments.indexOf("-l") !== -1)
-			{
-				_write(filesInDirectory[dirIndex].permissions + " " + filesInDirectory[dirIndex].type + " " + filesInDirectory[dirIndex].owner + " " + filesInDirectory[dirIndex].owner + " " + filesInDirectory[dirIndex].date + " ");
-			}
-			_write(filesInDirectory[dirIndex].name);
-			_write(separator);
-	   }
-	}
-	
-	function cat(arguments)
-	{
-		var filePos = $.inArray(arguments[1], $.map(filesInDirectory,function(item,index){ return item.name;}));
-	    if(filePos != -1)
-		{
-		  _write("\n");
-		  _write(filesInDirectory[filePos].content);
-		}
-	}
-	
-	function echo(arguments)
-	{
-	  
-	   _write("\n");
-	  
-	  for(var i = 1; i < arguments.length; i++)
-	  {
-		  _write(arguments[i]);
-		  _write(" ");
-	  }		
-	}*/
-	
-	
-	
 	return {
 		initialize: doInitialize,
 		clear: _clearConsole,
