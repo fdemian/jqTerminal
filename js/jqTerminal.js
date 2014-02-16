@@ -1,3 +1,10 @@
+/*!
+ * jqTerminal
+ * Copyright 2013, 2014 Federico Caminiti
+ * Released under the BSD-2-Clause license
+ * http://opensource.org/licenses/BSD-2-Clause
+ */
+ 
 var Terminal = function (user, prompt,container) {
 		
 		// Private variables.

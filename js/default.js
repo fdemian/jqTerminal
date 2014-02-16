@@ -1,3 +1,10 @@
+/*!
+ * jqTerminal Default Commands Plugin. 
+ * Copyright 2013, 2014 Federico Caminiti
+ * Released under the BSD-2-Clause license
+ * http://opensource.org/licenses/BSD-2-Clause
+ */
+
 	defaultCommands =
 	[
 			{name:"man",man:"man - display the on-line manual pages (aka ''man pages'')",run:man},
@@ -60,7 +67,7 @@
 		
 		return 0;
 	}
-	
+
 	function ls(arguments, self)
 	{
 	   var separator = (arguments === undefined || arguments.indexOf("-l") == -1)? "\t" : "\n";
@@ -81,21 +88,21 @@
 			self.write(separator);
 	   }
 	}
-	
+
 	function cat(arguments, self)
 	{
 		var filesInDirectory = self.files;
 		var filePos = $.inArray(arguments[1], $.map(filesInDirectory,function(item,index){ return item.name;}));
-	    if(filePos != -1)
+		if(filePos != -1)
 		{
 		  self.write("\n");
 		  self.write(filesInDirectory[filePos].content);
 		}
 	}
-	
+
 	function echo(arguments, self)
 	{
-	
+
 	  self.write("\n");
 	  
 	  for(var i = 1; i < arguments.length; i++)
