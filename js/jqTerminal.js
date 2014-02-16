@@ -45,7 +45,6 @@ var Terminal = function (user, prompt,container) {
 			var commandPos = $.inArray(command, $.map(_consoleCommands,function(item,index){ return item.name;}));
 			if( commandPos != -1)
 			{
-				console.log("Running " + command);
 				_consoleCommands[commandPos].run(arguments,_self);
 			}
 			else
@@ -65,11 +64,25 @@ var Terminal = function (user, prompt,container) {
 			}
 		}
 		
-		// Handles the keypress events to prevent the user to erase the command prompt.
+		/*
+		Handles the keypress events to prevent the user to erase the command prompt.
+		Relevant keys/events: 
+		
+		8  - Backspace.
+		13 - Enter.
+		36 - Init key.
+		37 - Arrow back.
+		38 - Arrow up.
+		39 - Arrow forward (this case is not being handled).
+		40 - Arrow down.
+		46 - Supress key. 
+		
+		*/
 		function handleKeydown(event)
-		{
-			console.log(event.which); 
-			
+		{		
+
+			console.log(event.which);
+				
 			switch(event.which)
 			{							
 				case 13:
@@ -81,16 +94,14 @@ var Terminal = function (user, prompt,container) {
 					preventPromptErasing(true);
 				case 8:	
 				case 37:								
-					// 8 - backspace,.
 					preventPromptErasing(false);
 					break;
 				case 38:				
 				case 40:
-					 //38 up arrow, 40 - down arrow
 					event.preventDefault();
 					break;
 				default:
-					//preventPromptErasing();
+					// As of now, nothing is done in this case.
 					break;
 			}
 		}

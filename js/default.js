@@ -1,54 +1,53 @@
-		defaultCommands = [
-				{name:"man",man:"man - display the on-line manual pages (aka ''man pages'')",run:man},
-				{name:"clear",man:"clear - clear the terminal screen",run:clear},
-				{name:"shutdown",man:"shutdown - bring the system down",run:shutdown},
-				{name:"reboot",man:"reboot - reboot the system",run:shutdown},
-				{name:"ls",man:"ls - list directory contents",run:ls},
-				{name:"cat",man:"cat - concatenate files and print on the standard output",run:cat},
-				{name:"echo",man:"echo - echo the contents of a file",run:echo}
-				];
-				
-		function clear(arguments, self)
-		{
-			self.clear();
-		}
+	defaultCommands =
+	[
+			{name:"man",man:"man - display the on-line manual pages (aka ''man pages'')",run:man},
+			{name:"clear",man:"clear - clear the terminal screen",run:clear},
+			{name:"shutdown",man:"shutdown - bring the system down",run:shutdown},
+			{name:"reboot",man:"reboot - reboot the system",run:shutdown},
+			{name:"ls",man:"ls - list directory contents",run:ls},
+			{name:"cat",man:"cat - concatenate files and print on the standard output",run:cat},
+			{name:"echo",man:"echo - echo the contents of a file",run:echo}
+	];
+			
+	function clear(arguments, self)
+	{
+		self.clear();
+	}
 
-		// Show the manual pages for a given command.
-		function man(arguments, self)
+	// Show the manual pages for a given command.
+	function man(arguments, self)
+	{
+		var consoleCommands = self.commands;
+		var command = arguments[1];
+		self.write("\n");
+		if( command !== undefined && command.trim() != "")
 		{
-			var consoleCommands = self.commands;
-			var command = arguments[1];
-			self.write("\n");
-			if( command !== undefined && command.trim() != "")
+			// Does the command we're trying to search information about exist?	
+			var commandIndex = $.inArray(command, $.map(consoleCommands,function(item,index){ return item.name;}));
+			if(commandIndex != -1)
 			{
-				// Does the command we're trying to search information about exist?	
-				var commandIndex = $.inArray(command, $.map(consoleCommands,function(item,index){ return item.name;}));
-				if(commandIndex != -1)
-				{
-					self.write(consoleCommands[commandIndex].man);
-				}
-				else
-				{
-					self.write("No manual entry for " + command);
-				}
+				self.write(consoleCommands[commandIndex].man);
 			}
 			else
 			{
-				self.write("What manual page do you want?");
+				self.write("No manual entry for " + command);
 			}
 		}
+		else
+		{
+			self.write("What manual page do you want?");
+		}
+	}
 
-	// Bring the system down....that means close the window!
-	// Arguments, an array of space-separated values representing arguments.
+	// Bring the system down.
 	function shutdown(arguments, self)
 	{
-		// Implementing a wait operation.
 		if((arguments !== undefined) && (arguments.length > 1) && (arguments[1].trim()!= "") && (arguments[1].indexOf("-t") != -1))
 		{
 			var time = arguments[2].trim(); 
 			if(!isNaN(time))
 			{
-				//wait "time" seconds before shuting down the system.
+				// Wait <time> seconds before shuting down the system.
 				self.write("\n");
 				self.write("Bringing down the system in " + time + " seconds");
 				self.write("\n");
@@ -96,7 +95,7 @@
 	
 	function echo(arguments, self)
 	{
-	  
+	
 	  self.write("\n");
 	  
 	  for(var i = 1; i < arguments.length; i++)
