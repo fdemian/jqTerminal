@@ -126,10 +126,13 @@ var Terminal = function (user, prompt,container) {
 		{
 		   event.preventDefault(); // Do not insert a newline. Instead, let us handle the event.		  
 		   var commandQuery = getCommandInput().trim();
+		   var splitCommand;
 		   if(commandQuery != "")
 		   {
-			  var splitCommand = commandQuery.split(" ");
+			  splitCommand = commandQuery.split(" ");
 			  executeCommand(splitCommand[0],splitCommand);
+		   } else {
+			  splitCommand = [commandQuery];
 		   }
 		  
 		  if(splitCommand[0].indexOf("clear") == -1)
