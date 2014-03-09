@@ -131,7 +131,9 @@ var Terminal = function (user, prompt,container) {
 		   {
 			  splitCommand = commandQuery.split(" ");
 			  executeCommand(splitCommand[0],splitCommand);
-		   } else {
+		   } 
+		   else 
+		   {
 			  splitCommand = [commandQuery];
 		   }
 		  
@@ -200,7 +202,8 @@ var Terminal = function (user, prompt,container) {
 		$("#" + _containerId).remove();
 	}
 
-	return {
+	return 
+	{
 		initialize: doInitialize,
 		clear: _clearConsole,
 		write: _write,
