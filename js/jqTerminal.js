@@ -202,8 +202,7 @@ var Terminal = function (user, prompt,container) {
 		$("#" + _containerId).remove();
 	}
 
-	return 
-	{
+	return {
 		initialize: doInitialize,
 		clear: _clearConsole,
 		write: _write,
