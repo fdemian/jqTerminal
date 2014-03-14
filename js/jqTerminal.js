@@ -14,7 +14,7 @@ var Terminal = function (user, prompt,container) {
 	var _promptSymbol = '';
 	var _eraseLimit;
 	var _self;
-	var _filesInDirectory = [{name:"hello.txt",mimeType:"text/plain",content:"Hola, mundo!.",permissions:"rw-r--r--",type:1,owner:_user,size:1,date:"18 Oct 16:45"}];		
+	var _filesInDirectory = [{name:"hello.txt",mimeType:"text/plain",content:"¡Hola mundo!\nHello world!\nHallo welt!",permissions:"rw-r--r--",type:1,owner:_user,size:1,date:"18 Oct 16:45"}];
 	var _consoleCommands = [];
 	
 	// Gets the command that was typed into the console.
