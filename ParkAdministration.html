@@ -17,25 +17,20 @@ div  > .console { background-color:blue; }
 
 function access(args, self)
 {
-  if( args.length < 4)
-  {
-     self.write("\n");
-	 self.write("access: PERMISSION DENIED");
-  }
-  else
-  {dd
-	if(args.length == 4 && args[1] == "main" && args[2] == "security" && args[3] == "grid")
+	if( (args.length == 4) && (args[1] == "main") && (args[2] == "security") && (args[3] == "grid"))
 	{
 	 self.write("\n");
 	 self.write("access: PERMISSION DENIED...and...\n");
-	 for(j=0; j <= 100; j++)
-	 {
-		 for(i=0; i <= 10; i++)
-		 {
-		   self.write("YOU DIDN'T SAY THE MAGIC WORD!\n");
-		 }
-	 }
 	 
+	 for(i=0; i <= 10; i++)
+	 {
+	   self.write("YOU DIDN'T SAY THE MAGIC WORD!\n");
+	 }
+	}
+	else
+	{
+	  self.write("\n");
+	  self.write("access: PERMISSION DENIED");
 	}
 	
   }
@@ -46,7 +41,6 @@ $(function(){
 	var terminal = new Terminal("", ">","console-container");
 	terminal.initialize();
     terminal.addCommand({name:"access",man:"access -- access main security interface",run:access});
-	
 	terminal.write("Jurassic Park, System Security Interface\n");
 	terminal.write("Version  4.0.5, Alpha E\n");
 	terminal.write("Ready...\n");
