@@ -207,6 +207,7 @@ var Terminal = function (user, prompt,container) {
 		clear: _clearConsole,
 		write: _write,
 		files: _filesInDirectory,
+		insertNewLine:_insertNewLine,
 		commands: _consoleCommands,
 		addCommand:addCommand,
 		destroy: doDestroy
