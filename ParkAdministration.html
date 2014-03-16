@@ -12,27 +12,10 @@ div  > .console { background-color:blue; }
 <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jqTerminal.js"></script>
+<script type="text/javascript" src="js/bootbox.min.js"></script>
+<script type="text/javascript" src="js/bootbox.min.js"></script>
 <script type="text/javascript" src="js/default.js"></script>
 <script type="text/javascript">
-
-function access(args, self)
-{
-	if( (args.length == 4) && (args[1] == "main") && (args[2] == "security") && (args[3] == "grid"))
-	{
-	 self.write("\n");
-	 self.write("access: PERMISSION DENIED...and...\n");
-	 
-	 for(i=0; i <= 10; i++)
-	 {
-	   self.write("YOU DIDN'T SAY THE MAGIC WORD!\n");
-	 }
-	}
-	else
-	{
-	  self.write("\n");
-	  self.write("access: PERMISSION DENIED");
-	}
-}
 
 $(function(){
 	var terminal = new Terminal("", ">","console-container");
@@ -43,6 +26,35 @@ $(function(){
 	terminal.write("Ready...\n");
 	terminal.insertNewLine();
 });
+
+function access(args, self)
+{
+	if( (args.length == 4) && (args[1] == "main") && (args[2] == "security") && (args[3] == "grid"))
+	{
+	 self.write("\n");
+	 self.write("access: PERMISSION DENIED....and...\n");
+	 
+	 for(i=0; i <= 100; i++)
+	 {
+	   self.write("YOU DIDN'T SAY THE MAGIC WORD!\n");
+	 }
+	 
+	 launch_gordo();
+	 
+	}
+	else
+	{
+	  self.write("\n");
+	  self.write("access: PERMISSION DENIED");
+	}
+}
+
+function launch_gordo()
+{
+	var some_html = '<img src="drogon.gif" width="90%"/>';
+	bootbox.alert(some_html);
+}
+
 </script>
 </head>
 <body>
