@@ -1,0 +1,60 @@
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>Jurassic Park System Security</title> 
+<style type="text/css"> 
+div { width:100%; height:100%;}
+div  > .console { background-color:blue; }
+</style>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css" href="css/jqTerminal.css">
+<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jqTerminal.js"></script>
+<script type="text/javascript" src="js/default.js"></script>
+<script type="text/javascript">
+
+function access(args, self)
+{
+  if( args.length < 4)
+  {
+     self.write("\n");
+	 self.write("access: PERMISSION DENIED");
+  }
+  else
+  {dd
+	if(args.length == 4 && args[1] == "main" && args[2] == "security" && args[3] == "grid")
+	{
+	 self.write("\n");
+	 self.write("access: PERMISSION DENIED...and...\n");
+	 for(j=0; j <= 100; j++)
+	 {
+		 for(i=0; i <= 10; i++)
+		 {
+		   self.write("YOU DIDN'T SAY THE MAGIC WORD!\n");
+		 }
+	 }
+	 
+	}
+	
+  }
+
+}
+
+$(function(){
+	var terminal = new Terminal("", ">","console-container");
+	terminal.initialize();
+    terminal.addCommand({name:"access",man:"access -- access main security interface",run:access});
+	
+	terminal.write("Jurassic Park, System Security Interface\n");
+	terminal.write("Version  4.0.5, Alpha E\n");
+	terminal.write("Ready...\n");
+	terminal.insertNewLine();
+});
+</script>
+</head>
+<body>
+<div id="console-container"></div>
+</body>
+</html>
