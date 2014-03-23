@@ -51,15 +51,17 @@ pre { margin-left: 22.5%; width: 58%;}
 <h2 id="workit">How does it work?</h2>
 
 <p>
-JQTerminal plugins are not hardcoded in the main logic of the application. Including - and propperly initializing - the terminal in your
-page won't recognize any commands that you haven't explicitly added. 
-
-The commands incluided in the demo on the FAQ page are implemented separately.
+JQTerminal plugins are not hardcoded in the main logic of the application. Even after you have included - and properly initialized - 
+the terminal, it won't recognize any commands that you haven't explicitly added. 
+<br />
+<br />
+The commands incluided in the demo on the FAQ page are implemented separately. This was done with the intention of giving people the 
+chance to remove them, should they find these commands do not suit their needs.
 </p>
 
 <h2 id="use">How do I use it?</h2>
     
-	<p>First, include the necesary files, namely "jqTerminal.css", "jqTerminal.js" and "default.js" if you plan to use the default commands.
+	<p>First, include the necesary files, namely <strong>jqTerminal.css</strong>, <strong>jqTerminal.js</strong>, and optionally <strong>default.js</strong> if you plan to use the default commands.
 	<br />
 	Next, initialize the console:</p>
 	<br />
@@ -77,7 +79,7 @@ The commands incluided in the demo on the FAQ page are implemented separately.
 	<pre>
 	for(i =0; i < defaultCommands.length; i++)
 	{
-	terminal.addCommand(defaultCommands[i]);
+	  terminal.addCommand(defaultCommands[i]);
 	}
 	</pre>
 	<br />
@@ -128,9 +130,9 @@ The commands incluided in the demo on the FAQ page are implemented separately.
 	<p>In order for a command to be sucesfully added to the console, it should have, at least the following sections</p>
 	
 	<ul>
-		<li>name - a string containing the name of the command.</li>
-		<li>man  - a string containing a description of what the command does does.</li>
-		<li>run  - a function, containing the code that executes when the console runs the command. </li>
+		<li><code>name</code> - a string containing the name of the command.</li>
+		<li><code>man</code>  - a string containing a description of what the command does does.</li>
+		<li><code>run</code>  - a function, containing the code that executes when the console runs the command. </li>
 	</ul>
 
 	<p>You should define your list of commands as follows </p>
@@ -147,12 +149,10 @@ The commands incluided in the demo on the FAQ page are implemented separately.
   <p>And then, in your main page add each command in the list:</p>
   
   <pre>
-  &ltscript&gt
   for(i =0; i < defaultCommands.length; i++)
   {
     terminal.addCommand(customCommands[i]);
   }
-  &lt/script&gt
  </pre>
  
  <br />
