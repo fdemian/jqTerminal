@@ -51,8 +51,10 @@ function access(args, self)
 
 function launch_gordo()
 {
-	var some_html = '<img src="drogon.gif" width="100%"/>';
+	var some_html = '<img src="files/images/drogon.gif" width="100%"/>';
 	bootbox.alert(some_html);
+	var audio = $('<audio src="files/audio/drogon_speech.mp3" autoplay loop></audio>');
+	audio.play();
 }
 
 </script>
