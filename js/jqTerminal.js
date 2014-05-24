@@ -196,6 +196,15 @@ var Terminal = function (user, prompt,container) {
 		}
 	}
 	
+    // Adds a list of commands to the terminal.
+	function addCommandList(commandList)
+	{
+		for(i =0; i < commandList.length; i++)
+		{
+		  addCommand(commandList[i]);
+		}
+	}
+	
 	// Removes the console from its container.
 	function doDestroy()
 	{
@@ -210,6 +219,7 @@ var Terminal = function (user, prompt,container) {
 		insertNewLine:_insertNewLine,
 		commands: _consoleCommands,
 		addCommand:addCommand,
+		addCommandList:addCommandList,
 		destroy: doDestroy
 	};
 };

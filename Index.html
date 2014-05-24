@@ -42,11 +42,7 @@ p,ul > li,.main-description
 $(function(){
 	var terminal = new Terminal("root@domain", "$","console-container");
 	terminal.initialize();
-	for(i =0; i < defaultCommands.length; i++)
-	{
-		console.log(defaultCommands[i].man);
-		terminal.addCommand(defaultCommands[i]);
-	}
+	terminal.addCommandList(defaultCommands);
 });
 </script>
 </head>
