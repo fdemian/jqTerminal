@@ -14,7 +14,7 @@ var Terminal = function (user, prompt,container) {
 	var _promptSymbol = '';
 	var _eraseLimit;
 	var _self;
-	var _filesInDirectory = [{name:"hello.txt",mimeType:"text/plain",content:"¡Hola mundo!\nHello world!\nHallo welt!",permissions:"rw-r--r--",type:1,owner:_user,size:1,date:"18 Oct 16:45"}];		
+	var _filesInDirectory = [{name:"hello.txt",mimeType:"text/plain",content:"¡Hola mundo!\nHello world!\nHallo welt!",permissions:"rw-r--r--",type:1,owner:_user,size:1,date:"18 Oct 16:45"}];
 	var _consoleCommands = [];
 	
 	// Gets the command that was typed into the console.
@@ -196,6 +196,15 @@ var Terminal = function (user, prompt,container) {
 		}
 	}
 	
+    // Adds a list of commands to the terminal.
+	function addCommandList(commandList)
+	{
+		for(i =0; i < commandList.length; i++)
+		{
+		  addCommand(commandList[i]);
+		}
+	}
+	
 	// Removes the console from its container.
 	function doDestroy()
 	{
@@ -207,9 +216,10 @@ var Terminal = function (user, prompt,container) {
 		clear: _clearConsole,
 		write: _write,
 		files: _filesInDirectory,
-		insertNewLine: _insertNewLine,
+		insertNewLine:_insertNewLine,
 		commands: _consoleCommands,
 		addCommand:addCommand,
+		addCommandList:addCommandList,
 		destroy: doDestroy
 	};
 };
