@@ -72,15 +72,12 @@ chance to remove them, should they find these commands do not suit their needs.
 	</pre>
 	<br />
 	<br />
-	<p>Finally, add the commands you want to use using the <code>addCommand</code> method.
-	For example, assuming you want to use the default commands. You'll have to transverse the list and add each command:</p>
+	<p>Finally, add the commands you want to use using the <code>addCommandList</code> method.
+	For example, assuming you want to use the default commands,use the method like so:</p>
 	<br />
 	<br />
 	<pre>
-	for(i =0; i < defaultCommands.length; i++)
-	{
-	  terminal.addCommand(defaultCommands[i]);
-	}
+	  terminal.addCommandList(defaultCommands);
 	</pre>
 	<br />
 	<br />
@@ -146,13 +143,10 @@ chance to remove them, should they find these commands do not suit their needs.
 	];
   </pre>
   
-  <p>And then, in your main page add each command in the list:</p>
+  <p>And then, in your main page the commands to the list using the <code>addCommandList</code> method:</p>
   
   <pre>
-  for(i =0; i < defaultCommands.length; i++)
-  {
-    terminal.addCommand(customCommands[i]);
-  }
+  terminal.addCommandList(customCommands);
  </pre>
  
  <br />
