@@ -13,7 +13,8 @@ defaultCommands =
 		{name:"reboot",man:"reboot - reboot the system",run:shutdown},
 		{name:"ls",man:"ls - list directory contents",run:ls},
 		{name:"cat",man:"cat - concatenate files and print on the standard output",run:cat},
-		{name:"echo",man:"echo - echo the contents of a file",run:echo}
+		{name:"echo",man:"echo - echo the contents of a file",run:echo},
+		{name:"export", man:"export - set an environment variable", run:exportVariable}
 ];
 		
 function clear(arguments, self)
@@ -90,7 +91,7 @@ function ls(arguments, self)
 }
 
 function cat(arguments, self)
-{
+{	
 	var filesInDirectory = self.files;
 	var filePos = $.inArray(arguments[1], $.map(filesInDirectory,function(item,index){ return item.name;}));
 	if(filePos != -1)
@@ -102,12 +103,29 @@ function cat(arguments, self)
 
 function echo(arguments, self)
 {
-
   self.write("\n");
+  var envValue;
   
   for(var i = 1; i < arguments.length; i++)
   {
-	  self.write(arguments[i]);
-	  self.write(" ");
+	  if(arguments[i].indexOf("$") == 0)
+	  {
+	  	 envValue = self.getEnvironmentVariable(arguments[i].slice(1, arguments[i].length));
+		 self.write(envValue);
+		 self.write("\n");
+	  }
+	  else
+	  {
+	    self.write(arguments[i]);
+	    self.write(" ");
+	  }
   }		
+}
+
+// Exports an environment variable.
+// arguments is usually a string of the form  <environment variable> = <value>
+function exportVariable(arguments, self)
+{
+	var splittedArguments = arguments[1].split("=");
+	self.setEnvironmentVariable(splittedArguments[0], splittedArguments[1]);
 }

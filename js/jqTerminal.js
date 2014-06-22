@@ -16,12 +16,20 @@ var Terminal = function (user, prompt,container) {
 	var _self;
 	var _filesInDirectory = [{name:"hello.txt",mimeType:"text/plain",content:"¡Hola mundo!\nHello world!\nHallo welt!",permissions:"rw-r--r--",type:1,owner:_user,size:1,date:"18 Oct 16:45"}];
 	var _consoleCommands = [];
+	var _environmentVariables = [];
 	
 	// Gets the command that was typed into the console.
 	function getCommandInput()
 	{
 		var lastLine = $(".console").val().split('\n')[$(".console").val().split('\n').length-1];
-		command = lastLine.split(_promptSymbol)[1];
+		var lastLineSplit = lastLine.split(_promptSymbol);
+		var command = "";
+		
+		for(i =1; i < lastLineSplit.length; i ++)
+		{
+			command = command + " " + (i >= 2? _promptSymbol : "") + lastLineSplit[i]; 
+		}
+				
 		return command;
 	}
 	
@@ -148,8 +156,6 @@ var Terminal = function (user, prompt,container) {
 	// Prevents the user from deleting the command prompt.
 	function preventPromptErasing(deleteKeyPressed)
 	{				  
-		  
-	  
 		if($(".console")[0].selectionStart  < _eraseLimit || $(".console")[0].selectionEnd < _eraseLimit || (!deleteKeyPressed && $(".console")[0].selectionStart  == _eraseLimit || $(".console")[0].selectionEnd == _eraseLimit))
 		{
 			event.preventDefault();
@@ -205,6 +211,24 @@ var Terminal = function (user, prompt,container) {
 		}
 	}
 	
+	function getEnvironmentVariable(variableName)
+	{
+		var varPos = $.inArray(variableName, $.map(_environmentVariables,function(item,index){ return item.name;}));
+		
+		if(varPos == -1)
+		{
+			return "";
+		}
+		
+		return _environmentVariables[varPos].value;
+	}
+	
+	// Sets an environment variable. 
+	function setEnvironmentVariable(envName, envValue)
+	{
+		_environmentVariables.push({name:envName,value:envValue});
+	}
+	
 	// Removes the console from its container.
 	function doDestroy()
 	{
@@ -220,6 +244,8 @@ var Terminal = function (user, prompt,container) {
 		commands: _consoleCommands,
 		addCommand:addCommand,
 		addCommandList:addCommandList,
-		destroy: doDestroy
+		destroy: doDestroy,
+		getEnvironmentVariable: getEnvironmentVariable,
+		setEnvironmentVariable: setEnvironmentVariable
 	};
 };
