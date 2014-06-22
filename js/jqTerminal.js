@@ -215,9 +215,13 @@ var Terminal = function (user, prompt,container) {
 	{
 		var varPos = $.inArray(variableName, $.map(_environmentVariables,function(item,index){ return item.name;}));
 		
+		/* 
+		If there is no environment variable with the specified name present,
+		we treat the input as if it were normal text, despite of the $ sign.
+		*/
 		if(varPos == -1)
 		{
-			return "";
+			return "$" + variableName;
 		}
 		
 		return _environmentVariables[varPos].value;
