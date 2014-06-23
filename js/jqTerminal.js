@@ -17,6 +17,8 @@ var Terminal = function (user, prompt,container) {
 	var _filesInDirectory = [{name:"hello.txt",mimeType:"text/plain",content:"¡Hola mundo!\nHello world!\nHallo welt!",permissions:"rw-r--r--",type:1,owner:_user,size:1,date:"18 Oct 16:45"}];
 	var _consoleCommands = [];
 	var _environmentVariables = [];
+	var _commandQueue = [];
+	var _currentQueuePosition = 0;
 	
 	// Gets the command that was typed into the console.
 	function getCommandInput()
@@ -111,8 +113,12 @@ var Terminal = function (user, prompt,container) {
 			case 37:								
 				preventPromptErasing(false);
 				break;
-			case 38:				
+			case 38:	
+				event.preventDefault();
+				getCommandFromQueue(true);
+				break;
 			case 40:
+				getCommandFromQueue(false);
 				event.preventDefault();
 				break;
 			default:
@@ -135,6 +141,9 @@ var Terminal = function (user, prompt,container) {
 	   event.preventDefault(); // Do not insert a newline. Instead, let us handle the event.		  
 	   var commandQuery = getCommandInput().trim();
 	   var splitCommand;
+	   
+	   _commandQueue.push(commandQuery);
+	   
 	   if(commandQuery != "")
 	   {
 		  splitCommand = commandQuery.split(" ");
@@ -161,6 +170,22 @@ var Terminal = function (user, prompt,container) {
 			event.preventDefault();
 			$(".console")[0].selectionStart = _eraseLimit;
 			$(".console")[0].selectionEnd = _eraseLimit;
+		}
+	}
+	
+	// Replaces whatever is on the console at the time of being called with the previous or next command.
+	function getCommandFromQueue(arrowUp)
+	{	
+		// Queue commands 
+		console.log(_commandQueue);
+	
+		if(_commandQueue.length == 0)
+		{
+			return;
+		}
+		
+		if(_currentQueuePosition == 0 && arrowUp)
+		{
 		}
 	}
 	
