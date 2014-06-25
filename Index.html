@@ -43,6 +43,7 @@ $(function(){
 	var terminal = new Terminal("root@domain", "$","console-container");
 	terminal.initialize();
 	terminal.addCommandList(defaultCommands);
+	terminal.setEnvironmentVariable("COMMANDS", "man \n clear \n ls\n cat\n echo \n shutdown");
 });
 </script>
 </head>
