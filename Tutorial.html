@@ -1,0 +1,165 @@
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>Console Demo</title> 
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css" href="css/jqTerminal.css">
+<style type="text/css"> 
+ h2, body > p 
+ { 
+ margin-left:24px;
+ }
+ ol
+ {
+ margin-left:9px;
+ }
+.centered-text 
+{
+text-align:center;
+}
+div 
+{
+ width: 48%;
+ height: 48%;
+ margin-left: 27%;
+}
+
+p,ul > li,.main-description
+{
+  color:darkgrey;
+}
+
+pre { margin-left: 22.5%; width: 58%;}
+</style>
+<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<h1 class="centered-text">JQTerminal</h1>
+
+<h3 class="centered-text main-description">How To Use (A brief tutorial)</h3>
+
+<ol>
+<li><h3><a href="#workit">How does it work?</a></h3></li>
+<li><h3><a href="#use">How do I use it?</a></h3></li>
+<li><h3><a href="#commands">Writing your own commands?</a></li>
+</ol>
+
+<h2 id="workit">How does it work?</h2>
+
+<p>
+JQTerminal plugins are not hardcoded in the main logic of the application. Even after you have included - and properly initialized - 
+the terminal, it won't recognize any commands that you haven't explicitly added. 
+<br />
+<br />
+The commands incluided in the demo on the FAQ page are implemented separately. This was done with the intention of giving people the 
+chance to remove them, should they find these commands do not suit their needs.
+</p>
+
+<h2 id="use">How do I use it?</h2>
+    
+	<p>First, include the necessary files, namely <strong>jqTerminal.css</strong>, <strong>jqTerminal.js</strong>, and optionally <strong>default.js</strong> if you plan to use the default commands.
+	<br />
+	Next, initialize the console:</p>
+	<br />
+	<br />
+	<pre>
+	var terminal = new Terminal("root@domain", "$","console-container");
+	terminal.initialize();
+	</pre>
+	<br />
+	<br />
+	<p>Finally, add the commands you want to use using the <code>addCommandList</code> method.
+	For example, assuming you want to use the default commands,use the method like so:</p>
+	<br />
+	<br />
+	<pre>
+	  terminal.addCommandList(defaultCommands);
+	</pre>
+	<br />
+	<br />
+	<p>...and you're done!</p>
+	<br />
+	<br />
+	<br />
+	<p>Alternatively, you can use the addCommand method if you want to add a single command to the terminal.</p>
+	<br />
+	
+ 
+<code></code>
+
+<h2 id="commands">Writing your own commands</h2>
+
+<p>In order to write your own commands, you have to take two things into consideration.</p>
+	
+	<ul>
+		<li>How should your command access the console?</li>
+		<li>What methods does the console expose?</li>
+	</ul>
+	
+	<p>Every command should have the following signature</p>
+		
+	<pre>function &ltname of your command&gt (arguments, self)</pre>
+	
+	<p>
+	<code>arguments</code> is a list containing the arguments that were used to invocate the command.
+	<br />
+	<code>self</code> represents the terminal itself. You will need this if you intend to perform any operations on the console (like, for example writing on it).
+	</p>
+	
+	<br />
+	
+	<p> Using self, you can access the methods the console exposes, which are the following: </p>
+	
+	<br />
+	
+	<p>
+		<code>initialize</code> - initializes the console. <br />
+		<code>clear</code> - clears all text on the console except for the promt and username. <br />
+		<code>write</code> - prints a given text on the console. <br />
+		<code>files</code> - returns a list of the files in the filesystem. <br />
+		<code>insertNewLine</code> - inserts a new line in the console. <br />
+		<code>commands</code> - returns the list of commands present on the console.<br />
+		<code>addCommand</code> - adds a given command to the console. <br />
+		<code>addCommandList</code> - adds a given set of commands to the console. <br />
+		<code>destroy</code> - destroys the console. <br />
+	</p>
+	
+	<br />
+	
+	<p>In order for a command to be successfully added to the console, it should have, at least, the following sections</p>
+	
+	<ul>
+		<li><code>name</code> - a string containing the name of the command.</li>
+		<li><code>man</code>  - a string containing a description of what the command does does.</li>
+		<li><code>run</code>  - a function, containing the code that executes when the console runs the command. </li>
+	</ul>
+
+	<p>You should define your list of commands as follows </p>
+	
+	<pre> 
+	customCommands =
+	[
+		{name:"command1",man:"command1 - do stuff",run:command1},
+		{name:"command2",man:"command2 - do more stuff",run:command2},
+		{name:"command3",man:"command3 - do even more stuff",run:command3}
+	];
+  </pre>
+  
+  <p>And then, in your main page the commands to the list using the <code>addCommandList</code> method:</p>
+  
+  <pre>
+  terminal.addCommandList(customCommands);
+ </pre>
+ 
+ <br />
+ 
+ <p>That should be all you need to get your custom defined commands to work.</p>
+ <br />
+ <br />
+	
+</body>
+</html>
