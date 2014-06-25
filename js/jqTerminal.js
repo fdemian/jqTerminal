@@ -5,7 +5,9 @@
  * http://opensource.org/licenses/BSD-2-Clause
  */
 var Terminal = function (user, prompt, container) {
-
+	
+	"use strict"; 
+	
     // Private variables.
     var _hostAndPrompt = '';
     var _user = "user";
@@ -25,7 +27,8 @@ var Terminal = function (user, prompt, container) {
         var lastLine = $(".console").val().split('\n')[$(".console").val().split('\n').length-1];
         var lastLineSplit = lastLine.split(_promptSymbol);
         var command = "";
-        
+        var i; 
+		
         for(i =1; i < lastLineSplit.length; i ++)
         {
             command = command + " " + (i >= 2? _promptSymbol : "") + lastLineSplit[i]; 
@@ -63,12 +66,12 @@ var Terminal = function (user, prompt, container) {
     }
     
     // Executes a given command. 
-    function executeCommand(command,arguments)
+    function executeCommand(command,commandArguments)
     {
         var commandPos = $.inArray(command, $.map(_consoleCommands,function(item,index){ return item.name;}));
         if( commandPos != -1)
         {
-            _consoleCommands[commandPos].run(arguments,_self);
+            _consoleCommands[commandPos].run(commandArguments,_self);
         }
         else
         {
@@ -248,6 +251,8 @@ var Terminal = function (user, prompt, container) {
     // Adds a list of commands to the terminal.
     function addCommandList(commandList)
     {
+		var i;
+		
         for(i =0; i < commandList.length; i++)
         {
           addCommand(commandList[i]);
