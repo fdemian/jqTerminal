@@ -18,7 +18,7 @@ var Terminal = function (user, prompt,container) {
 	var _consoleCommands = [];
 	var _environmentVariables = [];
 	var _commandQueue = [];
-	var _currentQueuePosition = 0;
+	var _currentCommandQueuePosition = -1;
 	
 	// Gets the command that was typed into the console.
 	function getCommandInput()
@@ -33,6 +33,13 @@ var Terminal = function (user, prompt,container) {
 		}
 				
 		return command;
+	}
+	
+	// Replaces the current command of the console with the specified string. 
+	function setCommandInput(command)
+	{
+	   var newValue = $(".console").val().slice(0, _eraseLimit) + command;
+	   $(".console").val(newValue);
 	}
 	
 	// Inserts a new line in the console. 
@@ -143,6 +150,7 @@ var Terminal = function (user, prompt,container) {
 	   var splitCommand;
 	   
 	   _commandQueue.push(commandQuery);
+	   _currentCommandQueuePosition += 1;
 	   
 	   if(commandQuery != "")
 	   {
@@ -174,19 +182,34 @@ var Terminal = function (user, prompt,container) {
 	}
 	
 	// Replaces whatever is on the console at the time of being called with the previous or next command.
+	/*
+		TODO's (in order of priority):
+		
+		- Make it work.
+		- Change this method's name (what kind of name is this?)
+		- Refactor and make the code less horrible. 
+	*/
 	function getCommandFromQueue(arrowUp)
-	{	
-		// Queue commands 
-		console.log(_commandQueue);
+	{			
+		var queueLength = _commandQueue.length;
 	
-		if(_commandQueue.length == 0)
+		// If there are no commands in the queue we don't do anything. 
+		if(queueLength == 0)
 		{
 			return;
 		}
-		
-		if(_currentQueuePosition == 0 && arrowUp)
+				
+		if(arrowUp)
 		{
+			_currentCommandQueuePosition = (_currentCommandQueuePosition == 0 ? 0 : (_currentCommandQueuePosition == queueLength - 1 ? _currentCommandQueuePosition : (_currentCommandQueuePosition - 1)));
 		}
+		else
+		{
+			_currentCommandQueuePosition = (_currentCommandQueuePosition == queueLength - 1 ? queueLength - 1 : _currentCommandQueuePosition + 1);
+		}	
+		
+		console.log(_currentCommandQueuePosition);
+		setCommandInput(_commandQueue[_currentCommandQueuePosition]);
 	}
 	
 	// Initialize the console and all of its relevant variables.
