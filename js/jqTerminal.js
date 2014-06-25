@@ -77,17 +77,13 @@ var Terminal = function (user, prompt, container) {
         }
     }
 	
-	 // Replaces whatever is on the console at the time of being called with the previous or next command.
-    /*
-        TODO's (in order of priority):
-
-        - Change this method's name (what kind of name is this?)
-        - Refactor and make the code less horrible. 
-    */
-    function getCommandFromQueue(arrowUp)
+	// Replaces the current command on the console with the previous or the next one in the queue.
+    function applyCommandHistory(arrowUp)
     {            
 	
-        // If there are no commands in the queue we don't do anything. 
+        /* If there are no commands in the queue or we got to the last one and the arrow down button is pressed, 
+		   we don't do anything.
+		*/
         if( (_commandQueue.length == 0) || (_currentCommandIndex == _commandQueue.length && !arrowUp))
         {
             return;
@@ -101,9 +97,8 @@ var Terminal = function (user, prompt, container) {
         {
             _currentCommandIndex = _currentCommandIndex == (_commandQueue.length-1) ? (_commandQueue.length-1) : (_currentCommandIndex+1);
         }    
-        
-		setCommandInput(_commandQueue[_currentCommandIndex]);
 		
+        setCommandInput(_commandQueue[_currentCommandIndex]);
     }
     
     // Handles the click event. 
@@ -199,10 +194,10 @@ var Terminal = function (user, prompt, container) {
                 break;
             case 38:    
                 event.preventDefault();
-                getCommandFromQueue(true);
+                applyCommandHistory(true);
                 break;
             case 40:
-                getCommandFromQueue(false);
+                applyCommandHistory(false);
                 event.preventDefault();
                 break;
             default:
