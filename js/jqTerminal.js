@@ -115,7 +115,7 @@ var Terminal = function (user, prompt, container) {
     }
 	
 	// Prevents the user from deleting the command prompt.
-    function preventPromptErasing(deleteKeyPressed)
+    function preventPromptErasing(event, deleteKeyPressed)
     {                  
         if($(".console")[0].selectionStart  < _eraseLimit || $(".console")[0].selectionEnd < _eraseLimit || (!deleteKeyPressed && $(".console")[0].selectionStart  == _eraseLimit || $(".console")[0].selectionEnd == _eraseLimit))
         {
@@ -189,11 +189,11 @@ var Terminal = function (user, prompt, container) {
                 handleInitKey();
 				break;
             case 46:
-                preventPromptErasing(true);
+                preventPromptErasing(event, true);
 				break;
             case 8:    
             case 37:                                
-                preventPromptErasing(false);
+                preventPromptErasing(event, false);
                 break;
             case 38:    
                 event.preventDefault();
