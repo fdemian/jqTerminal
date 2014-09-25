@@ -218,11 +218,7 @@ var Terminal = function (user, prompt, container) {
         _hostAndPrompt = user + prompt;        
         _containerId = container;
         _self = this;
-        var con = $("<textarea class=\"console\" spellcheck=\"false\">");
-        con.val(_hostAndPrompt);
-        _eraseLimit = _hostAndPrompt.length;
-        con.keydown(function( event ) { handleKeydown(event);});
-        
+		
         // Initialize the conosle and place it inside its container.
         var term = $("<textarea class=\"console\" spellcheck=\"false\">");
         term.val(_hostAndPrompt);
