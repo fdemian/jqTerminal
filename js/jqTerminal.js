@@ -139,7 +139,7 @@ var Terminal = function (user, prompt, container) {
        event.preventDefault(); // Do not insert a newline. Instead, let us handle the event.          
        var commandQuery = getCommandInput().trim();
        var splitCommand;
-       
+       	   
        _commandQueue.push(commandQuery);
        _currentCommandIndex++;
        
@@ -157,7 +157,10 @@ var Terminal = function (user, prompt, container) {
       {
          _insertNewLine();
       }
-      
+	  	 
+	  // Keep the console scrolled to the bottom.
+	  $(".console").scrollTop($(".console")[0].scrollHeight);
+		 
       return false;
     }
 	
@@ -218,11 +221,7 @@ var Terminal = function (user, prompt, container) {
         _hostAndPrompt = user + prompt;        
         _containerId = container;
         _self = this;
-        var con = $("<textarea class=\"console\" spellcheck=\"false\">");
-        con.val(_hostAndPrompt);
-        _eraseLimit = _hostAndPrompt.length;
-        con.keydown(function( event ) { handleKeydown(event);});
-        
+		
         // Initialize the conosle and place it inside its container.
         var term = $("<textarea class=\"console\" spellcheck=\"false\">");
         term.val(_hostAndPrompt);
