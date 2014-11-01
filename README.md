@@ -2,3 +2,10 @@ jqTerminal
 ==========
 
 A Unix-like terminal, written in Javascript.
+
+
+###Code Conventions
+
+- Tabs should not be used. 
+- Indentation must use 2 spaces.
+- The curly braces at the start and end of functions must go on their own line. Exceptions are cases when doing this results in a javascript error. 
