@@ -34,7 +34,7 @@ function man(arguments, self)
     // Does the command we're trying to search information about exist?	
     var commandIndex = $.inArray(command, $.map(consoleCommands,function(item,index){ return item.name;}));
     
-	if(commandIndex != -1)
+    if(commandIndex != -1)
     {
       self.write(consoleCommands[commandIndex].man);
     }
@@ -90,7 +90,7 @@ function ls(arguments, self)
       self.write(filesInDirectory[dirIndex].permissions + " " + filesInDirectory[dirIndex].type + " " + filesInDirectory[dirIndex].owner + " " + filesInDirectory[dirIndex].owner + " " + filesInDirectory[dirIndex].date + " ");
     }    
     
-	self.write(filesInDirectory[dirIndex].name);
+    self.write(filesInDirectory[dirIndex].name);
     self.write(separator);
 	
   }
@@ -135,6 +135,6 @@ function echo(arguments, self)
  */
 function exportVariable(arguments, self)
 {
-	var splittedArguments = arguments[1].split("=");
-	self.setEnvironmentVariable(splittedArguments[0], splittedArguments[1]);
+  var splittedArguments = arguments[1].split("=");
+  self.setEnvironmentVariable(splittedArguments[0], splittedArguments[1]);
 }
