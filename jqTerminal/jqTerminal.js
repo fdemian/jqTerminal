@@ -15,7 +15,8 @@ var Terminal = function (user, prompt, container) {
   var _promptSymbol = '';
   var _eraseLimit;
   var _self;
-      
+  var _consoleSelector;  
+  
   var _consoleCommands = [];
   var _environmentVariables = [];
   var _commandQueue = [];
@@ -78,7 +79,7 @@ var Terminal = function (user, prompt, container) {
   }
     
   // Executes a given command. 
-  function executeCommand(command,commandArguments)
+  function executeCommand(command, commandArguments)
   {
     var commandPos = $.inArray(command, $.map(_consoleCommands,function(item,index){ return item.name;}));
     
@@ -140,7 +141,6 @@ var Terminal = function (user, prompt, container) {
   // Handles the init key.                                
   function handleInitKey()        
   {
-    event.preventDefault();
     $(".console")[0].selectionStart = _eraseLimit;
     $(".console")[0].selectionEnd = _eraseLimit;          
   }
@@ -192,17 +192,18 @@ var Terminal = function (user, prompt, container) {
     
   */
   function handleKeydown(event)
-  {        
+  {
     console.log(event.which);
-            
+	
     switch(event.which)
     {   
      
-      case 13: 
+      case 13:                
                handleEnterKey(event);
                break;
       	       
-      case 36: 
+      case 36:
+               event.preventDefault();
                handleInitKey();
                break;
                
@@ -248,6 +249,12 @@ var Terminal = function (user, prompt, container) {
     $("#" + _containerId).append(term);
     $("#" + _containerId).click(function (event) {handleClick(event);});
 	
+	_consoleSelector = "#" + _containerId + " .console";
+		
+	_eraseLimit = $(_consoleSelector).val().length;
+	
+	$(_consoleSelector)[0].selectionStart = $(_consoleSelector).val().length;
+	$(_consoleSelector)[0].selectionEnd = $(_consoleSelector)[0].selectionStart;
   }
   
       
