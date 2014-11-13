@@ -5,7 +5,7 @@ A Unix-like terminal, written in Javascript.
 
 ###Try it out!
 
-You can try a demo of the console [Here] (http://fdemian.github.io/jqTerminal/ "JQTerminal Demo").
+You can try a demo of the console [here] (http://fdemian.github.io/jqTerminal/ "JQTerminal Demo").
 
 ###Code Conventions
 
