@@ -37,7 +37,7 @@ var Terminal = function (user, prompt, container) {
   // Gets the command that was typed into the console.
   function getCommandInput()
   {
-    var lastLine = $(".console").val().split('\n')[$(".console").val().split('\n').length-1];
+    var lastLine = $(_consoleSelector).val().split('\n')[$(_consoleSelector).val().split('\n').length-1];
     var lastLineSplit = lastLine.split(_promptSymbol);
     var command = "";
     var i; 
@@ -53,29 +53,29 @@ var Terminal = function (user, prompt, container) {
   // Replaces the current command of the console with the specified string. 
   function setCommandInput(command)
   {
-    var newValue = $(".console").val().slice(0, _eraseLimit) + command;
-    $(".console").val(newValue);
+    var newValue = $(_consoleSelector).val().slice(0, _eraseLimit) + command;
+    $(_consoleSelector).val(newValue);
   }
   
   // Inserts a new line in the console. 
   function _insertNewLine()
   {
-    $(".console").val($(".console").val() + '\n' + _hostAndPrompt);
+    $(_consoleSelector).val($(_consoleSelector).val() + '\n' + _hostAndPrompt);
     // Set the limit for erasing the conosole to the beginning of the newline.
-    _eraseLimit = $(".console").val().length;
+    _eraseLimit = $(_consoleSelector).val().length;
   }
 
   // Clear the console.
   function _clearConsole()
   {
-    $(".console").val("" + _hostAndPrompt);
+    $(_consoleSelector).val("" + _hostAndPrompt);
     _eraseLimit = _hostAndPrompt.length;
   }
     
   // Writes the given text on the console.
   function _write(text)
   {
-    $(".console").val($(".console").val() + text);
+    $(_consoleSelector).val($(_consoleSelector).val() + text);
   }
     
   // Executes a given command. 
@@ -89,7 +89,7 @@ var Terminal = function (user, prompt, container) {
     }
     else
     {
-      $(".console").val($(".console").val() + "\n");
+      $(_consoleSelector).val($(_consoleSelector).val() + "\n");
       _write("bash: " + command + ": command not found");
     }
   }
@@ -120,29 +120,29 @@ var Terminal = function (user, prompt, container) {
   // Handles the click event. 
   function handleClick(event)
   {
-    if($(".console")[0].selectionStart  <= _eraseLimit || $(".console")[0].selectionEnd <= _eraseLimit)
+    if($(_consoleSelector)[0].selectionStart  <= _eraseLimit || $(_consoleSelector)[0].selectionEnd <= _eraseLimit)
     {
-      $(".console")[0].selectionStart = _eraseLimit;
-      $(".console")[0].selectionEnd = _eraseLimit;
+      $(_consoleSelector)[0].selectionStart = _eraseLimit;
+      $(_consoleSelector)[0].selectionEnd = _eraseLimit;
     }	
   }
 
   // Prevents the user from deleting the command prompt.
   function preventPromptErasing(event, deleteKeyPressed)
   {                  
-    if($(".console")[0].selectionStart  < _eraseLimit || $(".console")[0].selectionEnd < _eraseLimit || (!deleteKeyPressed && $(".console")[0].selectionStart  == _eraseLimit || $(".console")[0].selectionEnd == _eraseLimit))
+    if($(_consoleSelector)[0].selectionStart  < _eraseLimit || $(_consoleSelector)[0].selectionEnd < _eraseLimit || (!deleteKeyPressed && $(_consoleSelector)[0].selectionStart  == _eraseLimit || $(_consoleSelector)[0].selectionEnd == _eraseLimit))
     {
       event.preventDefault();
-      $(".console")[0].selectionStart = _eraseLimit;
-      $(".console")[0].selectionEnd = _eraseLimit;
+      $(_consoleSelector)[0].selectionStart = _eraseLimit;
+      $(_consoleSelector)[0].selectionEnd = _eraseLimit;
     }
   }
   
   // Handles the init key.                                
   function handleInitKey()        
   {
-    $(".console")[0].selectionStart = _eraseLimit;
-    $(".console")[0].selectionEnd = _eraseLimit;          
+    $(_consoleSelector)[0].selectionStart = _eraseLimit;
+    $(_consoleSelector)[0].selectionEnd = _eraseLimit;          
   }
   
   // Handles the enter key.    
@@ -172,7 +172,7 @@ var Terminal = function (user, prompt, container) {
     }
 	  	 
     // Keep the console scrolled to the bottom.
-    $(".console").scrollTop($(".console")[0].scrollHeight);
+    $(_consoleSelector).scrollTop($(_consoleSelector)[0].scrollHeight);
     	 
     return false;
   }
@@ -249,12 +249,12 @@ var Terminal = function (user, prompt, container) {
     $("#" + _containerId).append(term);
     $("#" + _containerId).click(function (event) {handleClick(event);});
 	
-	_consoleSelector = "#" + _containerId + " .console";
-		
+	_consoleSelector = "#" + _containerId + " .console";		
 	_eraseLimit = $(_consoleSelector).val().length;
 	
 	$(_consoleSelector)[0].selectionStart = $(_consoleSelector).val().length;
 	$(_consoleSelector)[0].selectionEnd = $(_consoleSelector)[0].selectionStart;
+	
   }
   
       
