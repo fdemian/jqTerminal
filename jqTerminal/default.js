@@ -129,8 +129,9 @@ function echo(arguments, self)
   }		
 }
 
-/* Exports an environment variable.
- "arguments" is usually a string of the form  <environment variable> = <value> 
+/* 
+  Exports an environment variable.
+  "arguments" is a string of the form  <environment variable> = <value> 
  */
 function exportVariable(arguments, self)
 {
