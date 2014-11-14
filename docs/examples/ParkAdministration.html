@@ -6,14 +6,15 @@
 div { width:100%; height:100%;}
 div  > .console { background-color:blue; }
 </style>
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
-<link rel="stylesheet" type="text/css" href="css/jqTerminal.css">
-<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="jqTerminal/jqTerminal.js"></script>
-<script type="text/javascript" src="js/bootbox.min.js"></script>
-<script type="text/javascript" src="jqTerminal/default.js"></script>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.css">
+<link rel="stylesheet" type="text/css" href="../../css/jqTerminal.css">
+<script type="text/javascript" src="../../js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../jqTerminal/jqTerminal.js"></script>
+<script type="text/javascript" src="../../js/bootbox.min.js"></script>
+<script type="text/javascript" src="../../jqTerminal/default.js"></script>
+
 <script type="text/javascript">
 
 $(function(){
@@ -50,13 +51,14 @@ function access(args, self)
 
 function launch_gordo()
 {
-	var some_html = '<img src="files/images/drogon.gif" width="100%"/>';
+	var some_html = '<img src="files/drogon.gif" width="100%"/>';
 	bootbox.alert(some_html);
-	var audio = $('<audio src="files/audio/drogon_speech.mp3" autoplay loop></audio>');
+	var audio = $('<audio src="files/drogon_speech.mp3" autoplay loop></audio>');
 	audio.play();
 }
 
 </script>
+
 </head>
 <body>
 <div id="console-container"></div>
