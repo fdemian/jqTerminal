@@ -23,17 +23,17 @@ var Terminal = function (user, prompt, container) {
   var _currentCommandIndex = 0;
   
   var _filesInDirectory = 
-    [{
-      name:"hello.txt", 
-      mimeType:"text/plain",
-      content:"¡Hola mundo!\nHello world!\nHallo welt!", 
-      permissions:"rw-r--r--",
-      type:1,
-      owner:_user,
-      size:1,
-      date:"18 Oct 16:45"
-    }];
-
+  [{
+     name:"hello.txt", 
+     mimeType:"text/plain",
+     content:"¡Hola mundo!\nHello world!\nHallo welt!", 
+     permissions:"rw-r--r--",
+     type:1,
+     owner:_user,
+     size:1,
+     date:"18 Oct 16:45"
+  }];
+  
   // Gets the command that was typed into the console.
   function getCommandInput()
   {
@@ -93,13 +93,13 @@ var Terminal = function (user, prompt, container) {
       _write("bash: " + command + ": command not found");
     }
   }
-
+  
   // Replaces the current command on the console with the previous or the next one in the queue.
   function applyCommandHistory(arrowUp)
   {            
-
+   
     /* If there are no commands in the queue or we got to the last one and the arrow down button is pressed, we don't do anything.*/
-	
+    
     if( (_commandQueue.length == 0) || (_currentCommandIndex == _commandQueue.length && !arrowUp))
     {
       return;
@@ -252,12 +252,12 @@ var Terminal = function (user, prompt, container) {
 	_consoleSelector = "#" + _containerId + " .console";		
 	_eraseLimit = $(_consoleSelector).val().length;
 	
-	$(_consoleSelector)[0].selectionStart = $(_consoleSelector).val().length;
-	$(_consoleSelector)[0].selectionEnd = $(_consoleSelector)[0].selectionStart;
-	
+    $(_consoleSelector)[0].selectionStart = $(_consoleSelector).val().length;
+    $(_consoleSelector)[0].selectionEnd = $(_consoleSelector)[0].selectionStart;
+    
   }
   
-      
+     
   /* 
      Adds a command: 
          
