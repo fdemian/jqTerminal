@@ -15,7 +15,6 @@ A copy of this license can be found at the OSI Website: http://opensource.org/li
 ###Directories
 
 - jQTerminal: the application code itself.
-- css: contains the styles of the terminal itself. 
 - docs: contains documentation and examples of use. 
 - ext: external libraries.
 
