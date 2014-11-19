@@ -77,17 +77,18 @@ function ls(arguments, self)
 {
   var separator = (arguments === undefined || arguments.indexOf("-l") == -1)? "\t" : "\n";
   var filesInDirectory = self.files;
+ 
   self.write("\n");
     
   for(dirIndex =0; dirIndex < filesInDirectory.length; dirIndex++)
   {			
     if( arguments.indexOf("-l") !== -1)
     {
-      console.log(filesInDirectory[dirIndex].permissions);
-      console.log(filesInDirectory[dirIndex].type);
-      console.log(filesInDirectory[dirIndex].owner);
-      console.log(filesInDirectory[dirIndex].date);
-      self.write(filesInDirectory[dirIndex].permissions + " " + filesInDirectory[dirIndex].type + " " + filesInDirectory[dirIndex].owner + " " + filesInDirectory[dirIndex].owner + " " + filesInDirectory[dirIndex].date + " ");
+      self.write(filesInDirectory[dirIndex].permissions + " " 
+	             + filesInDirectory[dirIndex].type  + " " 
+				 + filesInDirectory[dirIndex].owner + " " 
+				 + filesInDirectory[dirIndex].owner + " " 
+				 + filesInDirectory[dirIndex].date  + " ");
     }    
     
     self.write(filesInDirectory[dirIndex].name);

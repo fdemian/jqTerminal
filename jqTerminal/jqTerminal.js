@@ -150,7 +150,7 @@ var Terminal = function (user, prompt, container) {
   {
     event.preventDefault(); // Do not insert a newline. Instead, let us handle the event.          
     
-	var commandQuery = getCommandInput().trim();
+    var commandQuery = getCommandInput().trim();
     var splitCommand;
     
     _commandQueue.push(commandQuery);
@@ -193,8 +193,7 @@ var Terminal = function (user, prompt, container) {
   */
   function handleKeydown(event)
   {
-    console.log(event.which);
-	
+
     switch(event.which)
     {   
      
