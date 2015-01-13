@@ -139,3 +139,14 @@ function exportVariable(arguments, self)
   var splittedArguments = arguments[1].split("=");
   self.setEnvironmentVariable(splittedArguments[0], splittedArguments[1]);
 }
+
+/*
+   Sets the background color for the console. 
+   
+   color: a string representing a valid html color be it a string (eg:"White") or a hexadecimal value ("#FFFFFF").
+*/
+function setBackgroundColor(color, self)
+{
+  var attrValue = "background-color:" + color;
+  self.setAttribute("style", attrValue);
+}

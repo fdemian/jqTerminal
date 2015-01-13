@@ -308,7 +308,21 @@ var Terminal = function (user, prompt, container) {
   {
     _environmentVariables.push({name:envName,value:envValue});
   }
-    
+  
+  function getAttribute(attribute)
+  {
+    var attr = $(_consoleSelector).attr(attribute); 
+	
+	console.log(attr); 
+	
+	return attr; 
+  }
+  
+  function setAttribute(attribute, value)
+  {
+     $(_consoleSelector).attr(attribute, value);
+  }
+  
   // Removes the console from its container.
   function doDestroy()
   {
@@ -326,7 +340,9 @@ var Terminal = function (user, prompt, container) {
            addCommandList: addCommandList,
            destroy: doDestroy,
            getEnvironmentVariable: getEnvironmentVariable,
-           setEnvironmentVariable: setEnvironmentVariable
+           setEnvironmentVariable: setEnvironmentVariable,
+		   getAttribute: getAttribute, 
+		   setAttribute: setAttribute
         };
 
 };
