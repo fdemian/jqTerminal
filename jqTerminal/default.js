@@ -14,7 +14,8 @@ defaultCommands =
   {name:"ls",man:"ls - list directory contents",run:ls},
   {name:"cat",man:"cat - concatenate files and print on the standard output",run:cat},
   {name:"echo",man:"echo - echo the contents of a file",run:echo},
-  {name:"export", man:"export - set an environment variable", run:exportVariable}
+  {name:"export", man:"export - set an environment variable", run:exportVariable},
+  {name:"color" , man:"color - change the terminal's background color", run:setColor}
 ];
 		
 function clear(arguments, self)
@@ -131,8 +132,8 @@ function echo(arguments, self)
 }
 
 /* 
-  Exports an environment variable.
-  "arguments" is a string of the form  <environment variable> = <value> 
+ * Exports an environment variable.
+ * "arguments" is a string of the form  <environment variable> = <value> 
  */
 function exportVariable(arguments, self)
 {
@@ -141,12 +142,55 @@ function exportVariable(arguments, self)
 }
 
 /*
-   Sets the background color for the console. 
-   
+ *  Set the terminal's background color or text color. 
+ *  The invocation takes the form color -<option> <value>. 
+ *  <value> is a hexadecimal value or a string representing a given color.
+ *  <option> 
+ *          -b sets the background color
+ *          -t sets the text color. 
+ */
+function setColor(arguments, self)
+{
+  
+  arguments = arguments.slice(1, arguments.length);   
+  
+  if(arguments.length != 2)
+  {	
+    return;
+  }	  
+  
+  var type = arguments[0].split("-")[1];
+  var color = arguments[1];
+  var attr;
+  
+  if(type == "t")
+  {
+    attr = "color:" + color;
+  }
+  else
+  {
+	if(type == "b")
+	{
+	  attr = "background-color:" + color;
+	}	  
+  }
+    
+  self.setAttribute("style", attr);
+  
+}
+
+/*
+   Sets the background color for the console.    
    color: a string representing a valid html color be it a string (eg:"White") or a hexadecimal value ("#FFFFFF").
 */
 function setBackgroundColor(color, self)
 {
   var attrValue = "background-color:" + color;
+  self.setAttribute("style", attrValue);
+}
+
+function setTextColor(color, self)
+{
+  var attrValue = "color:" + color;
   self.setAttribute("style", attrValue);
 }
