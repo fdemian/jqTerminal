@@ -165,32 +165,15 @@ function setColor(arguments, self)
   
   if(type == "t")
   {
-    attr = "color:" + color;
+    attr = "color";
   }
   else
   {
 	if(type == "b")
 	{
-	  attr = "background-color:" + color;
+	  attr = "background-color";
 	}	  
   }
-    
-  self.setAttribute("style", attr);
   
-}
-
-/*
-   Sets the background color for the console.    
-   color: a string representing a valid html color be it a string (eg:"White") or a hexadecimal value ("#FFFFFF").
-*/
-function setBackgroundColor(color, self)
-{
-  var attrValue = "background-color:" + color;
-  self.setAttribute("style", attrValue);
-}
-
-function setTextColor(color, self)
-{
-  var attrValue = "color:" + color;
-  self.setAttribute("style", attrValue);
+  self.setStyle(attr, color);
 }

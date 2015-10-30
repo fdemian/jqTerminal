@@ -323,6 +323,11 @@ var Terminal = function (user, prompt, container) {
      $(_consoleSelector).attr(attribute, value);
   }
   
+  function setStyle(attr, value)
+  {	  
+     $(_consoleSelector).css(attr, value);	  
+  }
+  
   // Removes the console from its container.
   function doDestroy()
   {
@@ -342,7 +347,8 @@ var Terminal = function (user, prompt, container) {
            getEnvironmentVariable: getEnvironmentVariable,
            setEnvironmentVariable: setEnvironmentVariable,
 		   getAttribute: getAttribute, 
-		   setAttribute: setAttribute
+		   setAttribute: setAttribute,
+		   setStyle: setStyle
         };
 
 };
