@@ -16,7 +16,7 @@ A copy of this license can be found at the OSI Website: http://opensource.org/li
 
 - jQTerminal: the application code itself.
 - docs: contains documentation and examples of use. 
-- ext: external libraries.
+- contrib: external libraries (contributed code).
 
 ###Code Conventions
 
