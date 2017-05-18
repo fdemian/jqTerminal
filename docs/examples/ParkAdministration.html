@@ -16,15 +16,21 @@ div { width:100%; height:100%;}
    margin: 117px auto;
 }
 
+#drogon-img 
+{
+	margin-top: -608px;
+	margin-left: -14px;
+	width: 103%;
+	height: 79%;
+}
+
 </style>
-<link rel="stylesheet" type="text/css" href="../../ext/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="../../ext/bootstrap/css/bootstrap-theme.css">
-<link rel="stylesheet" type="text/css" href="../../ext/magnificPopup/magnificPopup.css">
+<link rel="stylesheet" type="text/css" href="../../contrib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../../contrib/bootstrap/css/bootstrap-theme.css">
 <link rel="stylesheet" type="text/css" href="../../jqTerminal/jqTerminal.css">
 
-<script type="text/javascript" src="../../ext/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="../../ext/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../ext/magnificPopup/magnificPopup.js"></script>
+<script type="text/javascript" src="../../contrib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../../contrib/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../../jqTerminal/jqTerminal.js"></script>
 <script type="text/javascript" src="../../jqTerminal/default.js"></script>
 
@@ -32,14 +38,21 @@ div { width:100%; height:100%;}
 $(function(){
 	terminal = new Terminal("", ">","console-container");
 	terminal.initialize();
-    terminal.addCommand({name:"access",man:"access -- access main security interface",run:access});
+    terminal.addCommand({name:"access",man:"access -- access main security interface",run:access});	
 	terminal.write("Jurassic Park, System Security Interface\n");
 	terminal.write("Version  4.0.5, Alpha E\n");
 	terminal.write("Ready...\n");
 	terminal.insertNewLine();
 	
-	setBackgroundColor("blue", terminal);
-    
+	terminal.setStyle("background-color", "blue");    
+	$("#anoying-modal").css("display", "none");
+	
+	$("audio")[0].pause();	
+	
+	$("#anoying-modal").on('hide.bs.modal', function (e) {
+		close_gordo();
+	});
+	
 });
 
 function access(args, self)
@@ -66,28 +79,21 @@ function access(args, self)
 
 function launch_gordo()
 { 
-  
-  var popup = "<div id=\"alert-popup\"><img src=\"files/drogon.gif\" /><audio src=\"files/drogon_speech.mp3\" autoplay loop></audio></div>"
-  
-  $.magnificPopup.open({
-    items: {
-      src: popup,
-      type: 'inline'
-    },
-    callbacks: {
-      close: function(item) {close_gordo();}
-    }
-  });
-    
+  $("#anoying-modal").css("display", "block");
+  $("#anoying-modal").modal();    
+  $("audio")[0].play();
 }
 
 function close_gordo()
 {
+  
+  // Make modal invisible again.
+  $("#anoying-modal").css("display", "none");
+  
   var audio = $("audio"); 
   
   // Stop playing the audio.
   audio[0].pause(); 
-  audio.remove(); 
   
   // Restart the application. 
   terminal.clear();
@@ -101,6 +107,24 @@ function close_gordo()
 
 </head>
 <body>
+	
 	<div id="console-container"></div>
+	
+	<div class="modal fade" id="anoying-modal">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>			
+		  </div>
+		  <div class="modal-body">
+			<img src="files/drogon.gif" id="drogon-img" alt="You didn't say the magic word!" />
+			<audio src="files/drogon_speech.mp3" autoplay loop></audio>
+		  </div>
+		  <div class="modal-footer">
+		  </div>
+		</div>
+	  </div>	
+	</div>
+	
 </body>
 </html>
