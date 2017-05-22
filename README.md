@@ -3,22 +3,27 @@ jqTerminal
 
 A Unix-like terminal, written in Javascript.
 
-###Try it out!
+Try it out!
+==========
 
-You can try a demo of the console [here] (http://fdemian.github.io/jqTerminal/ "JQTerminal Demo").
+You can try a demo of the console [here] (http://fdemian.github.io/jqTerminal "JQTerminal Demo") .
 
-###License
+License
+==========
+
 
 JqTerminal is under the **2-Clause BSD License** (also known as *The FreeBSD License*). 
 A copy of this license can be found at the OSI Website: http://opensource.org/licenses/BSD-2-Clause . 
 
-###Directories
+Directories
+==========
 
 - jQTerminal: the application code itself.
 - docs: contains documentation and examples of use. 
 - contrib: external libraries (contributed code).
 
-###Code Conventions
+Code Conventions
+==========
 
 - Tabs should not be used. 
 - Indentation must use 2 spaces.
